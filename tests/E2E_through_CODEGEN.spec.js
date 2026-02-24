@@ -1,0 +1,30 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://rahulshettyacademy.com/angularpractice/');
+  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.getByRole('link', { name: 'iphone X' }).click();
+  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.getByRole('link', { name: 'Samsung Note' }).click();
+  await page.getByText('Name Email Password Check me').click();
+  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.locator('app-card').filter({ hasText: 'iphone X $24.99 Lorem ipsum' }).getByRole('button').click();
+  await page.locator('app-card').filter({ hasText: 'Samsung Note 8 $24.99 Lorem' }).getByRole('button').click();
+  await page.getByText('Checkout ( 2 ) (current)').click();
+  await page.getByRole('button', { name: 'Checkout' }).click();
+  await page.getByRole('textbox', { name: 'Please choose your delivery' }).click();
+  await page.getByRole('textbox', { name: 'Please choose your delivery' }).fill('122001');
+  await page.getByText('I agree with the term &').click();
+  await page.getByRole('button', { name: 'Purchase' }).click();
+  await page.getByText('× Success! Thank you! Your').click();
+  await page.getByText('× Success! Thank you! Your').dblclick();
+  await page.getByRole('button', { name: 'Purchase' }).click();
+  await page.getByText('× Success! Thank you! Your').click();
+  await expect(page.locator('app-checkout')).toContainText('× Success! Thank you! Your order will be delivered in next few weeks :-).');
+  await page.locator('app-checkout').click();
+  await expect(page.getByText('Success!')).toBeVisible();
+  await page.getByText('× Success! Thank you! Your').click();
+  await expect(page.getByRole('textbox', { name: 'Please choose your delivery' })).toHaveValue('122001');
+  await page.getByText('Copyright © ProtoCommerce').click();
+});
